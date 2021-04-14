@@ -19,9 +19,9 @@ public class Game {
     };
 
     private static final float[] colors = {
-            1.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 1.0f,
+            6.0f, 0.0f, 0.0f,
+            0.0f, 6.0f, 0.0f,
+            0.0f, 0.0f, 6.0f,
             0.0f, 0.0f, 0.0f,
     };
 
@@ -36,9 +36,9 @@ public class Game {
     private static int colorsId;
     private static int uniformMatrixLocation;
 
-    private static Matrix4f matrix = new Matrix4f()
-            .identity()
-            .translate(0.25f, 0.25f, 0.25f);
+
+    private static Matrix4f matrix = new Matrix4f().identity().scale(0.25f);
+    private static Matrix4f matrix2 = new Matrix4f().identity();
     // 4x4 -> FloatBuffer of size 16
     private static FloatBuffer matrixFloatBuffer = BufferUtils.createFloatBuffer(16);
 
@@ -75,7 +75,9 @@ public class Game {
 
         // Send the buffer (positions) to the GPU
         GL33.glBufferData(GL33.GL_ARRAY_BUFFER, fb, GL33.GL_STATIC_DRAW);
+
         GL33.glVertexAttribPointer(0, 3, GL33.GL_FLOAT, false, 0, 0);
+
         GL33.glEnableVertexAttribArray(0);
 
         // Clear the buffer from the memory (it's saved now on the GPU, no need for it here)
@@ -91,13 +93,16 @@ public class Game {
 
         // Send the buffer (positions) to the GPU
         GL33.glBufferData(GL33.GL_ARRAY_BUFFER, cb, GL33.GL_STATIC_DRAW);
+
         GL33.glVertexAttribPointer(1, 3, GL33.GL_FLOAT, false, 0, 0);
+
         GL33.glEnableVertexAttribArray(1);
 
         GL33.glUseProgram(Shaders.shaderProgramId);
 
         // Sending Mat4 to GPU
         matrix.get(matrixFloatBuffer);
+
         GL33.glUniformMatrix4fv(uniformMatrixLocation, false, matrixFloatBuffer);
 
         // Clear the buffer from the memory (it's saved now on the GPU, no need for it here)
@@ -109,19 +114,29 @@ public class Game {
 
         // Draw using the glDrawElements function
         GL33.glBindVertexArray(squareVaoId);
+
         GL33.glDrawElements(GL33.GL_TRIANGLES, indices.length, GL33.GL_UNSIGNED_INT, 0);
     }
 
     public static void update(long window) {
-        if(GLFW.glfwGetKey(window, GLFW.GLFW_KEY_D) == GLFW.GLFW_PRESS) {
-            matrix = matrix.translate(0.01f, 0f, 0f);
-        } if(GLFW.glfwGetKey(window, GLFW.GLFW_KEY_A) == GLFW.GLFW_PRESS) {
-            matrix = matrix.translate(-0.01f, 0f, 0f);
+        if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_UP) == GLFW.GLFW_PRESS) {
+            matrix = matrix.translate(0f, 0.05f, 0f);
+        }
+        if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_DOWN) == GLFW.GLFW_PRESS) {
+            matrix = matrix.translate(0, -0.05f, 0f);
+        }
+        if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT) == GLFW.GLFW_PRESS) {
+            matrix = matrix.translate(0.05f, 0f, 0f);
+        }
+        if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT) == GLFW.GLFW_PRESS) {
+            matrix = matrix.translate(-0.05f, 0f, 0f);
         }
 
-        // TODO: Send to GPU only if position updated
-        matrix.get(matrixFloatBuffer);
-        GL33.glUniformMatrix4fv(uniformMatrixLocation, false, matrixFloatBuffer);
-    }
 
+
+        matrix.get(matrixFloatBuffer);
+
+        GL33.glUniformMatrix4fv(uniformMatrixLocation, false, matrixFloatBuffer);
+
+    }
 }

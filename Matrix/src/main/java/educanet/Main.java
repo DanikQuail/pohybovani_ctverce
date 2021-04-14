@@ -12,11 +12,10 @@ public class Main {
         // Tell GLFW what version of OpenGL we want to use.
         GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MAJOR, 3);
         GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 3);
-        // TODO: Add support for macOS
 
         // Create the window...
         // We can set multiple options with glfwWindowHint ie. fullscreen, resizability etc.
-        long window = GLFW.glfwCreateWindow(800, 600, "My first window", 0, 0);
+        long window = GLFW.glfwCreateWindow(800, 600, "CTVEREC SE HYBE O_O ", 0, 0);
         if (window == 0) {
             GLFW.glfwTerminate();
             throw new Exception("Can't open window");

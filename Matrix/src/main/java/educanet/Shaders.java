@@ -22,7 +22,7 @@ public class Shaders {
         GL33.glShaderSource(vertexShaderId, vertexShaderSource);
         GL33.glCompileShader(vertexShaderId);
 
-        // Print the log... TODO: Check for errors
+        // Print the log...
         System.out.println(GL33.glGetShaderInfoLog(vertexShaderId));
         //endregion
 
@@ -31,7 +31,7 @@ public class Shaders {
         GL33.glShaderSource(fragmentShaderId, fragmentShaderSource);
         GL33.glCompileShader(fragmentShaderId);
 
-        // Print the log... TODO: Check for errors
+        // Print the log...
         System.out.println(GL33.glGetShaderInfoLog(fragmentShaderId));
         //endregion
 
