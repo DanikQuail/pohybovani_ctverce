@@ -19,10 +19,10 @@ public class Game {
     };
 
     private static final float[] colors = {
-            6.0f, 0.0f, 0.0f,
-            0.0f, 6.0f, 0.0f,
-            0.0f, 0.0f, 6.0f,
-            0.0f, 0.0f, 0.0f,
+            1.0f, 1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f, 1.0f,
     };
 
     private static final int[] indices = {
